@@ -19,6 +19,10 @@
       "src": "gbc.png",
       "sizes": "any",
       "purpose": "any"
+    },
+    {
+      "src": "gbc.png",
+      "sizes": "512x512"
     }
   ],
   "lang": "en",
