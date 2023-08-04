@@ -8,12 +8,10 @@
   "scope": "/",
   "short_name": "GBC",
   "start_url": "https://edgardozoppi.github.io/GameBoy-Online/",
-  "theme_color": "#ffffff",
   "categories": [
     "entertainment",
     "games"
   ],
-  "screenshots": [],
   "icons": [
     {
       "src": "gbc.png",
