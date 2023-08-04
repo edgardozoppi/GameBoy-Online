@@ -6,5 +6,7 @@
   "icons": {
     "128": "/images/128.png"
   },
-  "orientation": ["portrait-primary"]
+  "orientation": [
+    "portrait-primary"
+  ]
 }
