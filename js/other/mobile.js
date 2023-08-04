@@ -39,11 +39,11 @@ function keepScreenAwake() {
   } else {
     navigator.wakeLock.request("screen").then(lock => {
       screenWakeLock = lock;
-      cout("wake lock acquired");
+      // cout("wake lock acquired");
 
       screenWakeLock.addEventListener("release", () => {
         screenWakeLock = null;
-        cout("wake lock released");
+        // cout("wake lock released");
       });
 
     }).catch(err => cout(err));
