@@ -37,6 +37,11 @@ const buttons = {
 
 const pressedButtons = {};
 
+function pauseGame() {
+  pauseOrRun();
+  keepScreenAwake();
+}
+
 function keyDown(key) {
   if (pressedButtons[key] === undefined) {
     const btn = buttons[key];
@@ -45,7 +50,7 @@ function keyDown(key) {
 
     // cout(key, "down")
     if (key === "pause") {  
-      pauseOrRun();
+      pauseGame();
     } else {
       GameBoyKeyDown(key);
     }
@@ -56,7 +61,7 @@ function keyDown(key) {
     pressedButtons[key] = undefined;
 
     // cout(key, "down")
-    pauseOrRun();
+    pauseGame();
   }
 }
 

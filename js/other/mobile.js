@@ -1,4 +1,5 @@
 var mainCanvas = null;
+var screenWakeLock = null;
 var cout = console.log.bind(console);
 
 function startGame(blob) {
@@ -30,6 +31,31 @@ function removeExtension(name) {
   return name.substring(0, i);
 }
 
+function keepScreenAwake() {
+  if (!navigator.wakeLock) return;
+  
+  if (screenWakeLock) {
+    screenWakeLock.release();
+  } else {
+    navigator.wakeLock.request("screen").then(lock => {
+      screenWakeLock = lock;
+      cout("wake lock acquired");
+
+      screenWakeLock.addEventListener("release", () => {
+        screenWakeLock = null;
+        cout("wake lock released");
+      });
+
+    }).catch(err => cout(err));
+  }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    keepScreenAwake();
+  }
+});
+
 function onLoad() {
   const gameName = document.getElementById("game_name");
   const fileInput = document.getElementById("file_input");
@@ -40,6 +66,7 @@ function onLoad() {
     gameName.innerText = removeExtension(file.name);
     // loadViaXHR(`rom/${file.name}`);
     startGame(file);
+    keepScreenAwake();
   };
 
   mainCanvas = document.getElementById("main_canvas");
