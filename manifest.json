@@ -7,7 +7,7 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "GBC",
-  "start_url": "/",
+  "start_url": "https://edgardozoppi.github.io/GameBoy-Online/",
   "theme_color": "#ffffff",
   "categories": [
     "entertainment",
@@ -17,7 +17,8 @@
   "icons": [
     {
       "src": "gbc.png",
-      "sizes": "any"
+      "sizes": "any",
+      "purpose": "any"
     }
   ],
   "lang": "en",
