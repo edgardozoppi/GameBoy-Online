@@ -1,5 +1,6 @@
 {
   "background_color": "#ffd700",
+  "theme_color": "#000000",
   "description": "Emulator for the Game Boy Color written in JavaScript.",
   "dir": "ltr",
   "display": "standalone",
