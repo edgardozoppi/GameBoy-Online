@@ -1,12 +1,29 @@
 {
-  "name": "GAMEBOY",
-  "description": "GameBoy Online GAMEBOY Emulator",
-  "launch_path": "/index.html",
-  "fullscreen": true,
-  "icons": {
-    "128": "/images/128.png"
-  },
-  "orientation": [
-    "portrait-primary"
+  "background_color": "#ffd700",
+  "description": "Emulator for the Game Boy Color written in JavaScript.",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Game Boy Color Emulator",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "GBC",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "categories": [
+    "entertainment",
+    "games"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "gbc.png",
+      "sizes": "any"
+    }
+  ],
+  "lang": "en",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "window-controls-overlay"
   ]
 }
