@@ -222,7 +222,7 @@ body {
 @media only screen and (orientation: landscape) {
   #main_canvas {
     width: unset !important;
-    height: 80vh !important;
+    height: 81vh !important;
   }
 
   #controller {
