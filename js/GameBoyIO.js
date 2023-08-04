@@ -2,7 +2,7 @@
 var gameboy = null;						//GameBoyCore object.
 var gbRunInterval = null;				//GameBoyCore Timer
 var settings = [						//Some settings.
-	false, 								//Turn on sound.
+	true, 								//Turn on sound.
 	true,								//Boot with boot ROM first?
 	false,								//Give priority to GameBoy mode
 	1,									//Volume level set.
@@ -49,6 +49,15 @@ function run() {
 		cout("GameBoy core cannot run while it has not been initialized.", 1);
 	}
 }
+function pauseOrRun() {
+	if (GameBoyEmulatorInitialized()) {
+		if (GameBoyEmulatorPlaying()) {
+			pause();
+		} else {
+			run();
+		}
+	}
+}
 function pause() {
 	if (GameBoyEmulatorInitialized()) {
 		if (GameBoyEmulatorPlaying()) {
@@ -84,6 +93,18 @@ function save() {
 	else {
 		cout("GameBoy core cannot be saved while it has not been initialized.", 1);
 	}
+}
+function open(name, canvas) {
+	var state_suffix = 0;
+	while (findValue("FREEZE_" + name + "_" + state_suffix) != null) {
+		state_suffix++;
+	}
+	state_suffix--;
+	if (state_suffix >= 0) {
+		openState("FREEZE_" + name + "_" + state_suffix, canvas);
+		return true;
+	}
+	return false;
 }
 function saveSRAM() {
 	if (GameBoyEmulatorInitialized()) {

@@ -1,8 +1,6 @@
-var romPath = "rom/game.gb";
 var mainCanvas = null;
-var soundReady = false;
-
 var cout = console.log.bind(console);
+
 function startGame(blob) {
   var binaryHandle = new FileReader();
   binaryHandle.onload = function() {
@@ -17,7 +15,7 @@ function startGame(blob) {
   binaryHandle.readAsBinaryString(blob);
 }
 
-function loadViaXHR() {
+function loadViaXHR(romPath) {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", romPath);
   xhr.responseType = "blob";
@@ -27,11 +25,24 @@ function loadViaXHR() {
   xhr.send();
 }
 
-function windowingInitialize() {
-  cout("windowingInitialize() called.", 0);
-  mainCanvas = document.getElementById("mainCanvas");
+function removeExtension(name) {
+  const i = name.lastIndexOf(".");
+  return name.substring(0, i);
+}
+
+function onLoad() {
+  const gameName = document.getElementById("game_name");
+  const fileInput = document.getElementById("file_input");
+  const openButton = document.getElementById("controller_open");
+  openButton.onclick = () => fileInput.click();
+  fileInput.onchange = () => {
+    const name = fileInput.files[0].name;
+    gameName.innerText = removeExtension(name);
+    loadViaXHR(`rom/${name}`);
+  };
+
+  mainCanvas = document.getElementById("main_canvas");
   window.onunload = autoSave;
-  loadViaXHR();
 }
 
 //Wrapper for localStorage getItem, so that data can be retrieved in various types.
@@ -67,32 +78,4 @@ function deleteValue(key) {
   }
 }
 
-// Allow Audio context to be created in places which require
-// user input first. Hook this up to keyboard and touch inputs
-function initSound() {
-  if (!soundReady && GameBoyEmulatorInitialized()) {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    window.audioContext = new AudioContext();
-    if (window.audioContext) {
-      // Create empty buffer
-      var buffer = window.audioContext.createBuffer(1, 1, 22050);
-      var source = window.audioContext.createBufferSource();
-      source.buffer = buffer;
-      // Connect to output (speakers)
-      source.connect(window.audioContext.destination);
-      // Play sound
-      if (source.start) {
-        source.start(0);
-      } else if (source.play) {
-        source.play(0);
-      } else if (source.noteOn) {
-        source.noteOn(0);
-      }
-    }
-    settings[0] = true;
-    gameboy.initSound();
-    soundReady = true;
-  }
-}
-
-window.addEventListener("DOMContentLoaded", windowingInitialize);
+window.addEventListener("DOMContentLoaded", onLoad);

@@ -1,5 +1,5 @@
 function bindResize() {
-  var canvas = document.getElementById("mainCanvas");
+  var canvas = document.getElementById("main_canvas");
   var gameRatio = 160 / 144;
 
   function onResize() {
