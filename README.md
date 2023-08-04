@@ -1,34 +1,35 @@
 # JavaScript GameBoy Color Emulator
 
-Fork of Grant Galitz's JavaScript GameBoy Color Emulator made for running a single ROM
-when uploading homebrew games to services like Itch.io.
+Fork of the JavaScript GameBoy Color Emulator made to improve the user experience in mobile devices.
 
-This version makes the following changes.
+This version makes the following changes:
 
-- Canvas fills browser window on desktop/tablet while keeping aspect ratio
-- Touch controls displayed on mobile/tablet 
-- Using css `image-rendering: pixelated` rather than bilinear filtering
-- Touch dpad controls for mobile using touch move with a deadzone
+- Allow to load and play local ROMs
+- Support both portrait and landscape layouts
+- Screen fills the entire window on desktop/tablet while keeping aspect ratio
+- Use css `image-rendering: pixelated` rather than bilinear filtering
+- Support both keyboard and touch controls
+- Touch dpad controls using touch move with a deadzone
+- Allow to pause and resume the game
+- Auto save/load game state to resume previously played games
 - Keyboard fix for iPad keyboard case that doesn't report keyup event keycode
-- Wait for keyboard or touch input before starting AudioContext to fix issues in Chrome and iOS not playing Audio
-- No ability to switch ROM, or save/load states, this version is intended for deploying a single game
 
 ## Usage
 
-- Clone this repository
-- Add your ROM file as `rom/game.gb` (or edit romPath in js/other/mobile.js to point to your ROM file)
-- Upload to a webserver and visit index.html
+- Just visit https://edgardozoppi.github.io/GameBoy-Online/.
+- Optionally you may want to install the WebApp in your device so you can use it as a standalone App. Please visit https://web.dev/learn/pwa/installation/ for more information.
 
 ## Keyboard Controls
 
-Up - Up Arrow / W  
-Down - Down Arrow / S  
-Left - Left Arrow / A  
-Right - Right Arrow / D  
-A - Alt / Z / J  
-B - Ctrl / K / X  
-Start - Enter  
-Select - Shift  
+Up - Up Arrow / W
+Down - Down Arrow / S
+Left - Left Arrow / A
+Right - Right Arrow / D
+A - Alt / X / K
+B - Ctrl / Z / J
+Start - Enter
+Select - Shift
+Pause - Space
 
 Edit by changing `bindKeyboard` in `js/other/controls.js`.
 
