@@ -36,9 +36,10 @@ function onLoad() {
   const openButton = document.getElementById("controller_open");
   openButton.onclick = () => fileInput.click();
   fileInput.onchange = () => {
-    const name = fileInput.files[0].name;
-    gameName.innerText = removeExtension(name);
-    loadViaXHR(`rom/${name}`);
+    const file = fileInput.files[0];
+    gameName.innerText = removeExtension(file.name);
+    // loadViaXHR(`rom/${file.name}`);
+    startGame(file);
   };
 
   mainCanvas = document.getElementById("main_canvas");

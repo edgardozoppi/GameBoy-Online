@@ -4995,13 +4995,6 @@ GameBoyCore.prototype.recomputeDimension = function () {
 	this.offscreenWidth = (!settings[12]) ? 160 : this.canvas.width;
 	this.offscreenHeight = (!settings[12]) ? 144 : this.canvas.height;
 	this.offscreenRGBCount = this.offscreenWidth * this.offscreenHeight * 4;
-
-	console.log({
-		w: this.canvas.width,
-		h: this.canvas.height
-	})
-
-
 }
 GameBoyCore.prototype.initLCD = function () {
 	this.recomputeDimension();
