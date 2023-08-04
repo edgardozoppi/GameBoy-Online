@@ -7,6 +7,7 @@ const JS_KEY_ALT = 18;
 const JS_KEY_CTRL = 17;
 const JS_KEY_SHIFT = 16;
 const JS_KEY_SPACE = 32;
+const JS_KEY_F12 = 123;
 
 const JS_KEY_W = 87;
 const JS_KEY_A = 65;
@@ -41,17 +42,21 @@ function keyDown(key) {
     const btn = buttons[key];
     pressedButtons[key] = btn.className;
     btn.className += " btnPressed";
+
+    // cout(key, "down")
+    if (key === "pause") {  
+      pauseOrRun();
+    } else {
+      GameBoyKeyDown(key);
+    }
   } else if (key === "pause") {
     // Same as keyUp for toggle buttons like Pause
     const btn = buttons[key];
     btn.className = pressedButtons[key];
     pressedButtons[key] = undefined;
-  }
 
-  if (key === "pause") {
+    // cout(key, "down")
     pauseOrRun();
-  } else {
-    GameBoyKeyDown(key);
   }
 }
 
@@ -61,23 +66,41 @@ function keyUp(key) {
     const btn = buttons[key];
     btn.className = pressedButtons[key];
     pressedButtons[key] = undefined;
-  }
 
-  GameBoyKeyUp(key);
+    // cout(key, "up")
+    GameBoyKeyUp(key);
+  }
 }
 
+const onMouseUp = e => {
+  e.preventDefault();
+  e.stopPropagation();
+  // Detect when buttons are released outside themselves
+  ["right", "left", "up", "down", "a", "b", "select", "start", "pause"].forEach(keyUp);
+};
+
+window.addEventListener("mouseup", onMouseUp);
+
 function bindButton(el, code) {
-  el.addEventListener("touchstart", function(e) {
+  const onButtonPressed = e => {
+    if (e.sourceCapabilities.firesTouchEvents && e.type.startsWith("mouse")) return;
     e.preventDefault();
     e.stopPropagation();
     keyDown(code);
-  });
-
-  el.addEventListener("touchend", function(e) {
+  };
+  
+  const onButtonReleased = e => {
+    if (e.sourceCapabilities.firesTouchEvents && e.type.startsWith("mouse")) return;
     e.preventDefault();
     e.stopPropagation();
     keyUp(code);
-  });
+  };
+
+  el.addEventListener("mousedown", onButtonPressed);
+  el.addEventListener("mouseup", onButtonReleased);
+
+  el.addEventListener("touchstart", onButtonPressed);
+  el.addEventListener("touchend", onButtonReleased);
 }
 
 function bindDpad(el) {
@@ -178,7 +201,10 @@ function bindKeyboard() {
     } else if (e.keyCode === JS_KEY_SHIFT) {
       keyDown("select");
     }
-    e.preventDefault();
+    // Allow to open web developer tools
+    if (e.keyCode !== JS_KEY_F12) {
+      e.preventDefault();
+    }
   };
 
   window.onkeyup = function(e) {
@@ -214,7 +240,10 @@ function bindKeyboard() {
     } else if (e.keyCode === JS_KEY_SHIFT) {
       keyUp("select");
     }
-    e.preventDefault();
+    // Allow to open web developer tools
+    if (e.keyCode !== JS_KEY_F12) {
+      e.preventDefault();
+    }
   };
 }
 bindButton(buttons.pause, "pause");
