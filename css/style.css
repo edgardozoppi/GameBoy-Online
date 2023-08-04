@@ -40,22 +40,21 @@ body {
   flex-grow: 1;
 }
 
-#game {
+#screen {
   touch-action: none;
-  display: flex;
 }
 
-#game canvas {
+#main_canvas {
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   background-color: gray;
-  border: 8px solid black;
+  border: 8px solid #404040;
   border-radius: 9px;
   flex-grow: 1;
+  width: 84vw !important;
   height: unset !important;
-  width: unset !important;
 }
 
 #controller {
@@ -221,8 +220,9 @@ body {
 }
 
 @media only screen and (orientation: landscape) {
-  #game div {
-    flex-grow: 1;
+  #main_canvas {
+    width: unset !important;
+    height: 80vh !important;
   }
 
   #controller {
