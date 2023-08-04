@@ -8,11 +8,12 @@ This version makes the following changes:
 - Support both portrait and landscape layouts
 - Screen fills the entire window on desktop/tablet while keeping aspect ratio
 - Use css `image-rendering: pixelated` rather than bilinear filtering
-- Support both keyboard and touch controls
+- Support for keyboard, mouse and touch controls
 - Touch dpad controls using touch move with a deadzone
 - Allow to pause and resume the game
 - Auto save/load game state to resume previously played games
 - Keyboard fix for iPad keyboard case that doesn't report keyup event keycode
+- Keep screen awake while playing
 
 ## Usage
 
