@@ -15,9 +15,10 @@ const JS_KEY_S = 83;
 const JS_KEY_D = 68;
 const JS_KEY_J = 74;
 const JS_KEY_K = 75;
-
 const JS_KEY_Z = 90;
 const JS_KEY_X = 88;
+
+const JS_MOUSE_LEFT = 1;
 
 const DEADZONE = 0.1;
 
@@ -77,14 +78,17 @@ function keyUp(key) {
   }
 }
 
-const onMouseUp = e => {
-  e.preventDefault();
-  e.stopPropagation();
-  // Detect when buttons are released outside themselves
-  ["right", "left", "up", "down", "a", "b", "select", "start", "pause"].forEach(keyUp);
-};
-
-window.addEventListener("mouseup", onMouseUp);
+// Detect when buttons are released outside themselves
+function fixButtonsReleaseIssue() {
+  const onMouseUp = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Detect when buttons are released outside themselves
+    ["left", "right", "up", "down", "a", "b", "select", "start", "pause"].forEach(keyUp);
+  };
+  
+  window.addEventListener("mouseup", onMouseUp);
+}
 
 function bindButton(el, code) {
   const onButtonPressed = e => {
@@ -109,25 +113,33 @@ function bindButton(el, code) {
 }
 
 function bindDpad(el) {
-  el.addEventListener("touchstart", function(e) {
+  const onMousePressed = e => {
+    if (e.sourceCapabilities.firesTouchEvents || e.buttons !== JS_MOUSE_LEFT) return;
+    onDpadPressed(e, e.clientX, e.clientY);
+  };
+
+  const onTouchPressed = e => {
+    const touch = e.targetTouches[0];
+    onDpadPressed(e, touch.clientX, touch.clientY);
+  };
+
+  const onDpadPressed = (e, clientX, clientY) => {
     e.preventDefault();
     e.stopPropagation();
     var rect = e.currentTarget.getBoundingClientRect();
-    var x = (2 * (e.targetTouches[0].clientX - rect.left)) / rect.width - 1;
-    var y = (2 * (e.targetTouches[0].clientY - rect.top)) / rect.height - 1;
+    var x = (2 * (clientX - rect.left)) / rect.width - 1;
+    var y = (2 * (clientY - rect.top)) / rect.height - 1;
     move(x, y);
-  });
+  };
 
-  el.addEventListener("touchmove", function(e) {
+  const onDpadReleased = e => {
+    if (e.sourceCapabilities.firesTouchEvents && e.type.startsWith("mouse")) return;
     e.preventDefault();
     e.stopPropagation();
-    var rect = e.currentTarget.getBoundingClientRect();
-    var x = (2 * (e.targetTouches[0].clientX - rect.left)) / rect.width - 1;
-    var y = (2 * (e.targetTouches[0].clientY - rect.top)) / rect.height - 1;
-    move(x, y);
-  });
+    ["left", "right", "up", "down"].forEach(keyUp);
+  };
 
-  function move(x, y) {
+  const move = (x, y) => {
     if (x < -DEADZONE || x > DEADZONE) {
       if (y > x && y < -x) {
         keyUp("right");
@@ -157,20 +169,19 @@ function bindDpad(el) {
         keyUp("right");
       }
     }
-  }
+  };
 
-  el.addEventListener("touchend", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    keyUp("left");
-    keyUp("right");
-    keyUp("up");
-    keyUp("down");
-  });
+  el.addEventListener("mousedown", onMousePressed);
+  el.addEventListener("mousemove", onMousePressed);
+  el.addEventListener("mouseup", onDpadReleased);
+
+  el.addEventListener("touchstart", onTouchPressed);
+  el.addEventListener("touchmove", onTouchPressed);
+  el.addEventListener("touchend", onDpadReleased);
 }
 
 function bindKeyboard() {
-  window.onkeydown = function(e) {
+  const onKeyDown = e => {
     if (
       e.keyCode !== JS_KEY_CTRL &&
       e.keyCode !== JS_KEY_ALT &&
@@ -212,11 +223,11 @@ function bindKeyboard() {
     }
   };
 
-  window.onkeyup = function(e) {
+  const onKeyUp = e => {
     if (e.key === "Dead") {
       // Ipad keyboard fix :-/
       // Doesn't register which key was released, so release all of them
-      ["right", "left", "up", "down", "a", "b", "select", "start", "pause"].forEach(keyUp);
+      ["left", "right", "up", "down", "a", "b", "select", "start", "pause"].forEach(keyUp);
     }
     else if (e.keyCode === JS_KEY_SPACE) {
       keyUp("pause");
@@ -250,7 +261,11 @@ function bindKeyboard() {
       e.preventDefault();
     }
   };
+
+  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("keyup", onKeyUp);
 }
+
 bindButton(buttons.pause, "pause");
 bindButton(buttons.start, "start");
 bindButton(buttons.select, "select");
@@ -258,3 +273,4 @@ bindButton(buttons.a, "a");
 bindButton(buttons.b, "b");
 bindDpad(dpad);
 bindKeyboard();
+fixButtonsReleaseIssue();
