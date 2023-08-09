@@ -61,16 +61,41 @@ function onLoad() {
   const gameName = document.getElementById("game_name");
   const fileInput = document.getElementById("file_input");
   const openButton = document.getElementById("controller_open");
-
+  const openDialog = document.getElementById("open_dialog");
+  const closeDialog = document.getElementById("close_dialog");
+  const openNew = document.getElementById("open_new");
+  
   window.onunload = autoSave;
-  openButton.onclick = () => fileInput.click();
+  openButton.onclick = () => {
+    if (!isPaused()) {
+      keyDown("pause");
+    }
+    openDialog.showModal();
+  };
+
+  const onCloseDialog = () => {
+    openDialog.close();
+    keyDown("pause");
+  };
+
+  closeDialog.onclick = onCloseDialog;
+
+  openNew.onclick = () => {
+    fileInput.click();
+  };
+
   fileInput.onchange = async () => {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
+      fileInput.value = "";
+
+    if (file) {
       gameName.innerText = removeExtension(file.name);
-      // loadViaXHR(`rom/${file.name}`);
-      startGame(file);
-      keepScreenAwake();
+        // loadViaXHR(`rom/${file.name}`);
+        startGame(file);
+        keepScreenAwake();
+    }
+      onCloseDialog();
     }
   };
 

@@ -38,6 +38,10 @@ const buttons = {
 
 const pressedButtons = {};
 
+function isPaused() {
+  return pressedButtons["pause"] !== undefined;
+}
+
 function pauseGame() {
   pauseOrRun();
   keepScreenAwake();

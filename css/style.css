@@ -1,14 +1,43 @@
 body {
   margin: 0;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+}
+
+#open_dialog {
+  border-radius: 8px;
+  outline: 1px solid white;
+}
+
+#open_dialog::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+  backdrop-filter: blur(5px);
+}
+
+#open_dialog header {
+  font-weight: bold;
+  text-align: center;
+}
+
+#open_dialog section {
+  margin-block: 16px;
+}
+
+#open_dialog footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+#open_dialog button {
+  width: 64px;
+  height: 25px;
 }
 
 #gameboy {
   background: gold;
   /* background: linear-gradient(#998000, gold, #998000); */
   background: radial-gradient(ellipse at 50% 30%, gold, #a88c00);
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-    Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 300;
   margin: 0px;
   padding: 0px;
   touch-action: none;
