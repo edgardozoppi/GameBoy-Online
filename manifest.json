@@ -29,5 +29,16 @@
     "standalone",
     "minimal-ui",
     "window-controls-overlay"
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/octet-stream": [
+          ".gb",
+          ".gbc"
+        ]
+      }
+    }
   ]
 }

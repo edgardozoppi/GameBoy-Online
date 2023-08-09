@@ -21,7 +21,7 @@ function loadViaXHR(romPath) {
   xhr.open("GET", romPath);
   xhr.responseType = "blob";
   xhr.onload = () => {
-    startGame(new Blob([this.response], { type: "text/plain" }));
+    startGame(new Blob([this.response], { type: "application/octet-stream" }));
   };
   xhr.send();
 }
