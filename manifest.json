@@ -16,12 +16,9 @@
   "icons": [
     {
       "src": "gbc.png",
-      "sizes": "any",
+      "sizes": "512x512 any",
+      "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "gbc.png",
-      "sizes": "512x512"
     }
   ],
   "lang": "en",
@@ -38,7 +35,16 @@
           ".gb",
           ".gbc"
         ]
-      }
+      },
+      "icons": [
+        {
+          "src": "gbc.png",
+          "sizes": "512x512 any",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ],
+      "launch_type": "multiple-clients"
     }
   ]
 }
