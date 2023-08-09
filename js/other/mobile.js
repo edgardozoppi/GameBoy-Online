@@ -20,7 +20,7 @@ function loadViaXHR(romPath) {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", romPath);
   xhr.responseType = "blob";
-  xhr.onload = function() {
+  xhr.onload = () => {
     startGame(new Blob([this.response], { type: "text/plain" }));
   };
   xhr.send();
@@ -57,9 +57,12 @@ document.addEventListener("visibilitychange", () => {
 });
 
 function onLoad() {
+  mainCanvas = document.getElementById("main_canvas");
   const gameName = document.getElementById("game_name");
   const fileInput = document.getElementById("file_input");
   const openButton = document.getElementById("controller_open");
+
+  window.onunload = autoSave;
   openButton.onclick = () => fileInput.click();
   fileInput.onchange = () => {
     const file = fileInput.files[0];
@@ -69,8 +72,14 @@ function onLoad() {
     keepScreenAwake();
   };
 
-  mainCanvas = document.getElementById("main_canvas");
-  window.onunload = autoSave;
+  // Open ROM passed as parameter if any
+  const params = window.launchParams;
+  if (params && params.files && params.files.length > 0) {
+    const file = params.files[0];
+    gameName.innerText = removeExtension(file.name);
+    startGame(file);
+    keepScreenAwake();
+  }
 }
 
 //Wrapper for localStorage getItem, so that data can be retrieved in various types.
