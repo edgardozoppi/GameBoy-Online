@@ -2,14 +2,17 @@
 
 Fork of the JavaScript GameBoy Color Emulator made to improve the user experience in mobile devices.
 
-This version makes the following changes:
+This version supports the following features:
 
+- Progressive Web Application (PWA) for desktop/tablet/mobile devices
 - Allow to load and play local ROMs
+- Open ROMS by double click in desktop devices
+- Open ROMS by pinning them to the home screen of your tablet/mobile device
 - Support both portrait and landscape layouts
-- Screen fills the entire window on desktop/tablet while keeping aspect ratio
+- Screen fills most of the window while keeping aspect ratio
 - Use css `image-rendering: pixelated` rather than bilinear filtering
 - Support for keyboard, mouse and touch controls
-- Touch dpad controls using touch move with a deadzone
+- Dpad controls using mouse/touch movements with a deadzone
 - Allow to pause and resume the game
 - Auto save/load game state to resume previously played games
 - Keyboard fix for iPad keyboard case that doesn't report keyup event keycode
