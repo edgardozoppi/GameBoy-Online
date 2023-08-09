@@ -73,12 +73,15 @@ function onLoad() {
   };
 
   // Open ROM passed as parameter if any
-  const params = window.launchParams;
-  if (params && params.files && params.files.length > 0) {
-    const file = params.files[0];
-    gameName.innerText = removeExtension(file.name);
-    startGame(file);
-    keepScreenAwake();
+  if (window.launchQueue) {
+    launchQueue.setConsumer(params => {    
+      if (params && params.files && params.files.length > 0) {
+        const file = params.files[0];
+        gameName.innerText = removeExtension(file.name);
+        startGame(file);
+        keepScreenAwake();
+      }
+    });
   }
 }
 
