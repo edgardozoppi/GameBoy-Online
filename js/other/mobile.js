@@ -79,6 +79,7 @@ function onLoad() {
         const file = params.files[0];
 
         file.getFile().then(blob => {
+          blob.handle = file;
           gameName.innerText = removeExtension(file.name);
           startGame(blob);
           keepScreenAwake();
