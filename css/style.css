@@ -12,22 +12,23 @@ body {
   margin: 0px;
   padding: 0px;
   touch-action: none;
-  text-align: center;
   -webkit-touch-callout: none;
   user-select: none;
   overflow: hidden;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 190px auto 190px;
+  grid-template-rows: 40px auto;
+  grid-template-areas:
+    "l h r"
+    "l m r";
 }
 
-#menu {
-  height: 40px;
+#header {
+  grid-area: h;
+  align-self: center;
   padding-inline: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 10px;
 }
 
 #file_input {
@@ -42,6 +43,16 @@ body {
 
 #screen {
   touch-action: none;
+  grid-area: m;
+  container-type: size;
+  container-name: screen;
+}
+
+@container screen (aspect-ratio > 160 / 144) {
+  #main_canvas {
+    width: auto !important;
+    height: 100%;
+  }
 }
 
 #main_canvas {
@@ -52,21 +63,63 @@ body {
   background-color: gray;
   border: 8px solid #404040;
   border-radius: 9px;
-  flex-grow: 1;
-  width: 84vw !important;
-  height: unset !important;
+
+  width: 100%;
+  aspect-ratio: 160 / 144;
+  box-sizing: border-box;
+  object-fit: contain;
+  display: flex;
+  margin: auto;
 }
 
-#controller {
-  touch-action: none;
-  opacity: 0.8;
-  position: relative;
-  flex-grow: 1;
-  margin-top: 5px;
-}
-
-#controller div {
+.btn {
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btnPressed {
+  opacity: 0.5;
+}
+
+.roundBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 64px;
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  cursor: pointer;
+}
+
+.capsuleBtn {
+  font-weight: 900;
+  font-size: 10px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 40px;
+  text-transform: uppercase;
+  width: 64px;
+  height: 32px;
+  border-radius: 40px;
+  background: #4d4d4d;
+  background: radial-gradient(ellipse at center, #4d4d4d 0%, #292929 100%);
+  cursor: pointer;
+}
+
+#controller_panel_left {
+  touch-action: none;
+  grid-area: l;
+  position: relative;
+}
+
+#controller_panel_right {
+  touch-action: none;
+  grid-area: r;
+  position: relative;
 }
 
 #controller_dpad {
@@ -75,7 +128,6 @@ body {
   left: 0px;
   width: 184px;
   height: 184px;
-  box-shadow: none !important;
 }
 
 #controller_dpad:before {
@@ -163,36 +215,6 @@ body {
   right: 105px;
 }
 
-.roundBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 64px;
-  width: 64px;
-  height: 64px;
-  border-radius: 64px;
-  cursor: pointer;
-}
-
-.capsuleBtn {
-  font-weight: 900;
-  font-size: 10px;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 40px;
-  text-transform: uppercase;
-  width: 64px;
-  height: 32px;
-  border-radius: 40px;
-  background: #4d4d4d;
-  background: radial-gradient(ellipse at center, #4d4d4d 0%, #292929 100%);
-  cursor: pointer;
-}
-
 #controller_open {
   position: absolute;
   top: 20px;
@@ -221,17 +243,16 @@ body {
   right: 105px;
 }
 
-.btnPressed {
-  opacity: 0.5;
-}
+/* @media only screen and (orientation: landscape) {
 
-@media only screen and (orientation: landscape) {
-  #main_canvas {
-    width: unset !important;
-    height: 81vh !important;
-  }
+} */
 
-  #controller {
-    position: unset;
+@media only screen and (orientation: portrait) {
+  #gameboy {
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "h h"
+      "m m"
+      "l r";
   }
 }

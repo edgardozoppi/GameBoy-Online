@@ -11,26 +11,28 @@
 
 <body>
   <div id="gameboy">
-    <div id="menu">
+    <div id="header">
       <input type="file" id="file_input" />
       <div id="game_name">Game Boy Color Emulator</div>
     </div>
     <div id="screen">
       <canvas id="main_canvas" width="160" height="144">No Canvas Support</canvas>
     </div>
-    <div id="controller">
+    <div id="controller_panel_left">
+      <div id="controller_open" class="btn capsuleBtn">Open</div>
+      <div id="controller_pause" class="btn capsuleBtn">Pause</div>
       <div id="controller_dpad">
-        <div id="controller_left"></div>
-        <div id="controller_right"></div>
-        <div id="controller_up"></div>
-        <div id="controller_down"></div>
+        <div id="controller_left" class="btn"></div>
+        <div id="controller_right" class="btn"></div>
+        <div id="controller_up" class="btn"></div>
+        <div id="controller_down" class="btn"></div>
       </div>
-      <div id="controller_open" class="capsuleBtn">Open</div>
-      <div id="controller_pause" class="capsuleBtn">Pause</div>
-      <div id="controller_select" class="capsuleBtn">Select</div>
-      <div id="controller_start" class="capsuleBtn">Start</div>
-      <div id="controller_b" class="roundBtn">B</div>
-      <div id="controller_a" class="roundBtn">A</div>
+    </div>
+    <div id="controller_panel_right">
+      <div id="controller_select" class="btn capsuleBtn">Select</div>
+      <div id="controller_start" class="btn capsuleBtn">Start</div>
+      <div id="controller_b" class="btn roundBtn">B</div>
+      <div id="controller_a" class="btn roundBtn">A</div>
     </div>
   </div>
   <script src="js/other/mobile.js"></script>
@@ -39,7 +41,6 @@
   <script src="js/other/resampler.js"></script>
   <script src="js/other/XAudioServer.js"></script>
   <script src="js/other/controls.js"></script>
-  <script src="js/other/resize.js"></script>
   <script src="js/GameBoyCore.js"></script>
   <script src="js/GameBoyIO.js"></script>
 </body>
