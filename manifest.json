@@ -6,7 +6,7 @@
   "display": "standalone",
   "name": "Game Boy Color Emulator",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/GameBoy-Online/",
   "short_name": "GBC",
   "start_url": "https://edgardozoppi.github.io/GameBoy-Online/",
   "categories": [
@@ -32,7 +32,7 @@
   ],
   "file_handlers": [
     {
-      "action": "/",
+      "action": "/GameBoy-Online/",
       "accept": {
         "application/octet-stream": [
           ".gb",
