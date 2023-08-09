@@ -18,11 +18,11 @@ body {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-columns: 190px auto 190px;
+  grid-template-columns: auto;
   grid-template-rows: 40px auto;
   grid-template-areas:
-    "l h r"
-    "l m r";
+    "h"
+    "m";
 }
 
 #header {
@@ -41,11 +41,21 @@ body {
   flex-grow: 1;
 }
 
-#screen {
-  touch-action: none;
+#main {
   grid-area: m;
+  display: grid;
+  grid-template-columns: 190px auto 190px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "l s r";
+}
+
+#screen {
+  grid-area: s;
+  touch-action: none;
   container-type: size;
   container-name: screen;
+  padding-bottom: 20px;
 }
 
 @container screen (aspect-ratio > 160 / 144) {
@@ -113,13 +123,11 @@ body {
 #controller_panel_left {
   touch-action: none;
   grid-area: l;
-  position: relative;
 }
 
 #controller_panel_right {
   touch-action: none;
   grid-area: r;
-  position: relative;
 }
 
 #controller_dpad {
@@ -243,16 +251,19 @@ body {
   right: 105px;
 }
 
-/* @media only screen and (orientation: landscape) {
-
-} */
-
 @media only screen and (orientation: portrait) {
-  #gameboy {
-    grid-template-columns: auto auto;
-    grid-template-areas:
-      "h h"
-      "m m"
-      "l r";
+  #main {
+    display: block;
+  }
+
+  #screen {
+    container-type: unset;
+    padding-bottom: 0;
+    padding-inline: 20px;
+  }
+
+  #controller_panel_left,
+  #controller_panel_right {
+    position: relative;
   }
 }
