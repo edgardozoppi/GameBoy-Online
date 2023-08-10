@@ -59,32 +59,19 @@ document.addEventListener("visibilitychange", () => {
 function onLoad() {
   mainCanvas = document.getElementById("main_canvas");
   const gameName = document.getElementById("game_name");
+  const fileInput = document.getElementById("file_input");
   const openButton = document.getElementById("controller_open");
 
   window.onunload = autoSave;
-  openButton.onclick = async () => {
-    const filePickerOptions = {
-      types: [
-        {
-          description: "Game Boy games",
-          accept: {
-            "application/octet-stream": [
-              ".gb",
-              ".gbc"
-            ],
-          },
-        },
-      ],
-      excludeAcceptAllOption: true,
-      multiple: false,
-    };
-
-    const [fileHandle] = await window.showOpenFilePicker(filePickerOptions);
-    const file = await fileHandle.getFile();
-    gameName.innerText = removeExtension(file.name);
-    // loadViaXHR(`rom/${file.name}`);
-    startGame(file);
-    keepScreenAwake();
+  openButton.onclick = () => fileInput.click();
+  fileInput.onchange = async () => {
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      gameName.innerText = removeExtension(file.name);
+      // loadViaXHR(`rom/${file.name}`);
+      startGame(file);
+      keepScreenAwake();
+    }
   };
 
   // Open ROM passed as parameter if any
