@@ -75,7 +75,6 @@ body {
   border-radius: 9px;
 
   width: 100%;
-  aspect-ratio: 160 / 144;
   box-sizing: border-box;
   object-fit: contain;
   display: flex;
