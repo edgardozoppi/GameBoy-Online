@@ -31,10 +31,6 @@ body {
   padding-inline: 10px;
 }
 
-#file_input {
-  display: none;
-}
-
 #game_name {
   font-weight: bold;
   text-align: center;

@@ -59,13 +59,28 @@ document.addEventListener("visibilitychange", () => {
 function onLoad() {
   mainCanvas = document.getElementById("main_canvas");
   const gameName = document.getElementById("game_name");
-  const fileInput = document.getElementById("file_input");
   const openButton = document.getElementById("controller_open");
 
   window.onunload = autoSave;
-  openButton.onclick = () => fileInput.click();
-  fileInput.onchange = () => {
-    const file = fileInput.files[0];
+  openButton.onclick = async () => {
+    const filePickerOptions = {
+      types: [
+        {
+          description: "Game Boy games",
+          accept: {
+            "application/octet-stream": [
+              ".gb",
+              ".gbc"
+            ],
+          },
+        },
+      ],
+      excludeAcceptAllOption: true,
+      multiple: false,
+    };
+
+    const [fileHandle] = await window.showOpenFilePicker(filePickerOptions);
+    const file = await fileHandle.getFile();
     gameName.innerText = removeExtension(file.name);
     // loadViaXHR(`rom/${file.name}`);
     startGame(file);
@@ -74,51 +89,16 @@ function onLoad() {
 
   // Open ROM passed as parameter if any
   if (window.launchQueue) {
-    launchQueue.setConsumer(params => {
+    launchQueue.setConsumer(async params => {
       if (params && params.files && params.files.length > 0) {
-        const file = params.files[0];
-
-        file.getFile().then(blob => {
-          blob.handle = file;
+        const fileHandle = params.files[0];
+        const file = await fileHandle.getFile();
+          file.handle = fileHandle;
           gameName.innerText = removeExtension(file.name);
-          startGame(blob);
+          startGame(file);
           keepScreenAwake();
-        }).catch(err => cout(err));
       }
     });
-  }
-}
-
-//Wrapper for localStorage getItem, so that data can be retrieved in various types.
-function findValue(key) {
-  try {
-    if (window.localStorage.getItem(key) != null) {
-      return JSON.parse(window.localStorage.getItem(key));
-    }
-  } catch (error) {
-    //An older Gecko 1.8.1/1.9.0 method of storage (Deprecated due to the obvious security hole):
-    if (window.globalStorage[location.hostname].getItem(key) != null) {
-      return JSON.parse(window.globalStorage[location.hostname].getItem(key));
-    }
-  }
-  return null;
-}
-//Wrapper for localStorage setItem, so that data can be set in various types.
-function setValue(key, value) {
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch (error) {
-    //An older Gecko 1.8.1/1.9.0 method of storage (Deprecated due to the obvious security hole):
-    window.globalStorage[location.hostname].setItem(key, JSON.stringify(value));
-  }
-}
-//Wrapper for localStorage removeItem, so that data can be set in various types.
-function deleteValue(key) {
-  try {
-    window.localStorage.removeItem(key);
-  } catch (error) {
-    //An older Gecko 1.8.1/1.9.0 method of storage (Deprecated due to the obvious security hole):
-    window.globalStorage[location.hostname].removeItem(key);
   }
 }
 
