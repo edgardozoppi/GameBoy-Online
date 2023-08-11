@@ -18,17 +18,19 @@ body {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: 40px auto;
+  grid-template-columns: 190px auto 190px;
+  grid-template-rows: min-content auto;
   grid-template-areas:
-    "h"
-    "m";
+    "l h r"
+    "l s r";
 }
 
 #header {
   grid-area: h;
-  align-self: center;
   padding-inline: 10px;
+  height: 40px;
+  display: flex;
+  align-items: center;
 }
 
 #file_input {
@@ -39,15 +41,6 @@ body {
   font-weight: bold;
   text-align: center;
   flex-grow: 1;
-}
-
-#main {
-  grid-area: m;
-  display: grid;
-  grid-template-columns: 190px auto 190px;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "l s r";
 }
 
 #screen {
@@ -73,7 +66,6 @@ body {
   background-color: gray;
   border: 8px solid #404040;
   border-radius: 9px;
-
   width: 100%;
   box-sizing: border-box;
   object-fit: contain;
@@ -251,7 +243,7 @@ body {
 }
 
 @media only screen and (orientation: portrait) {
-  #main {
+  #gameboy {
     display: block;
   }
 
@@ -264,5 +256,6 @@ body {
   #controller_panel_left,
   #controller_panel_right {
     position: relative;
+    grid-area: s;
   }
 }
