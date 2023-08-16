@@ -6,25 +6,35 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="gbc.png" type="image/png">
+  <link rel="icon" href="images/gbc.png" type="image/png">
   <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
+  <input id="open_input" type="file" accept=".gb, .gbc" />
+  <input id="load_input" type="file" accept=".sav" />
+
   <dialog id="open_dialog">
-    <header>Open game</header>
+    <header>Load</header>
     <section>
-      <div id="open_new">New game...</div>
-      <div id="recent_games"></div>
+      <div id="recent_games">
+        <!-- <div class="saved_game">
+          <span>Test</span>
+          <a><img src="images/download.svg" alt="Download" /></a>
+          <img src="images/download.svg" alt="Download" />
+          <img src="images/delete.svg" alt="Delete" />
+        </div> -->
+      </div>
     </section>
     <footer>
+      <button id="open_new">Game</button>
+      <button id="open_saved">State</button>
       <button id="close_dialog">Cancel</button>
     </footer>
   </dialog>
 
   <div id="gameboy">
     <div id="header">
-      <input id="file_input" type="file" accept=".gb, .gbc" />
       <div id="game_name">Game Boy Color Emulator</div>
     </div>
 
@@ -33,7 +43,7 @@
     </div>
 
     <div id="controller_panel_left">
-      <div id="controller_open" class="btn capsuleBtn">Open</div>
+      <div id="controller_open" class="btn capsuleBtn">Load</div>
       <div id="controller_pause" class="btn capsuleBtn">Pause</div>
 
       <div id="controller_dpad">

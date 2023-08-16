@@ -15,7 +15,7 @@
   ],
   "icons": [
     {
-      "src": "gbc.png",
+      "src": "images/gbc.png",
       "sizes": "512x512 any",
       "type": "image/png",
       "purpose": "any"
@@ -38,7 +38,7 @@
       },
       "icons": [
         {
-          "src": "gbc.png",
+          "src": "images/gbc.png",
           "sizes": "512x512 any",
           "type": "image/png",
           "purpose": "any"

@@ -5,6 +5,10 @@ body {
   font-weight: 300;
 }
 
+input[type="file"] {
+  display: none;
+}
+
 #open_dialog {
   border-radius: 8px;
   outline: 1px solid white;
@@ -27,11 +31,33 @@ body {
 #open_dialog footer {
   display: flex;
   justify-content: space-around;
+  gap: 15px;
 }
 
 #open_dialog button {
-  width: 64px;
+  min-width: 64px;
   height: 25px;
+}
+
+.saved_game {
+  display: flex;
+  gap: 10px;
+}
+
+.saved_game span {
+  flex-grow: 1;
+}
+
+.saved_game a {
+  display: contents;
+}
+
+.saved_game img {
+  cursor: pointer;
+}
+
+.saved_game img:hover {
+  filter: invert(10%) sepia(100%) saturate(5691%) hue-rotate(246deg) brightness(95%) contrast(149%);
 }
 
 #gameboy {
@@ -60,10 +86,6 @@ body {
   height: 40px;
   display: flex;
   align-items: center;
-}
-
-#file_input {
-  display: none;
 }
 
 #game_name {

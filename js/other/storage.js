@@ -32,3 +32,8 @@ function deleteValue(key) {
 		window.globalStorage[location.hostname].removeItem(key);
 	}
 }
+
+//Wrapper for localStorage, so that data can be retrieved in various types.
+function listValues() {
+	return Object.keys(window.localStorage);
+}
