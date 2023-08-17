@@ -84,8 +84,8 @@ function refreshSavedGames(parent) {
     div.appendChild(span);
     
     const link = document.createElement('a');
-    link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(value));
-    link.setAttribute('download', `${name}.sav`);
+    link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(value)}`);
+    link.setAttribute("download", `${name}.sav`);
     div.appendChild(link);
 
     let img = document.createElement("img");
