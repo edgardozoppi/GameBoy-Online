@@ -73,7 +73,10 @@ document.addEventListener("visibilitychange", () => {
 function refreshSavedGames(parent) {
   const keys = listValues();
   const items = keys.map(k => {
-    const name = k.substring("B64_SRAM_".length);
+    let name = k;
+    if (name.startsWith("B64_SRAM_")) {
+      name = k.substring("B64_".length);
+    }
     const value = findValue(k);
 
     const div = document.createElement("div");
@@ -161,7 +164,9 @@ function onLoad() {
       loadInput.value = "";
 
       if (file) {
-        loadSavedGame(`B64_SRAM_${removeExtension(file.name)}`, file);
+        let name = removeExtension(file.name);
+        if (name.startsWith("SRAM_")) name = `B64_${name}`;
+        loadSavedGame(name, file);
         setTimeout(() => refreshSavedGames(recentGames), 1);
       }
     }
