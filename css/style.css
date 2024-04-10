@@ -12,6 +12,9 @@ input[type="file"] {
 #open_dialog {
   border-radius: 8px;
   outline: 1px solid white;
+  background: gold;
+  /* background: linear-gradient(#998000, gold, #998000); */
+  background: radial-gradient(ellipse at 50% 5%, gold, #a88c00);
 }
 
 #open_dialog::backdrop {
@@ -24,7 +27,7 @@ input[type="file"] {
   text-align: center;
 }
 
-#open_dialog section {
+#open_dialog main {
   margin-block: 16px;
 }
 
@@ -35,8 +38,13 @@ input[type="file"] {
 }
 
 #open_dialog button {
-  min-width: 64px;
-  height: 25px;
+  border-style: none;
+}
+
+#recent_games {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .saved_game {
@@ -157,8 +165,8 @@ input[type="file"] {
   width: 64px;
   height: 32px;
   border-radius: 40px;
-  background: #4d4d4d;
-  background: radial-gradient(ellipse at center, #4d4d4d 0%, #292929 100%);
+  background: #666;
+  background: radial-gradient(ellipse at center, #666 0%, #292929 100%);
   cursor: pointer;
 }
 

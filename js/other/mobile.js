@@ -21,7 +21,11 @@ function loadSavedGame(key, blob) {
   textHandle.onload = function() {
     if (this.readyState === 2) {
       try {
-        setValue(key, this.result);
+        let value = this.result;
+        if (key.startsWith("RTC_")) {
+          value = JSON.parse(value);
+        }
+        setValue(key, value);
       } catch (e) {
         alert(e.message);
       }
@@ -70,43 +74,48 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
+function addSavedGame(k) {
+  let name = k;
+  if (name.startsWith("B64_SRAM_")) {
+    name = k.substring("B64_".length);
+  }
+
+  const div = document.createElement("div");
+  div.className = "saved_game";
+  
+  let value = findValue(k);
+  if (name.startsWith("RTC_")) {
+    value = `[${value}]`;
+  }
+  const link = document.createElement('a');
+  link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(value)}`);
+  link.setAttribute("download", `${name}.sav`);
+  div.appendChild(link);
+
+  let img = document.createElement("img");
+  img.src = "images/download.svg";
+  img.alt = "Download";
+  link.appendChild(img);
+
+  const span = document.createElement("span");
+  span.textContent = name;
+  div.appendChild(span);
+
+  img = document.createElement("img");
+  img.src = "images/delete.svg";
+  img.alt = "Delete";
+  img.onclick = () => {
+    deleteValue(k);
+    div.parentElement.removeChild(div);
+  };
+  div.appendChild(img);
+
+  return div;
+}
+
 function refreshSavedGames(parent) {
   const keys = listValues();
-  const items = keys.map(k => {
-    let name = k;
-    if (name.startsWith("B64_SRAM_")) {
-      name = k.substring("B64_".length);
-    }
-    const value = findValue(k);
-
-    const div = document.createElement("div");
-    div.className = "saved_game";
-
-    const span = document.createElement("span");
-    span.textContent = name;
-    div.appendChild(span);
-    
-    const link = document.createElement('a');
-    link.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(value)}`);
-    link.setAttribute("download", `${name}.sav`);
-    div.appendChild(link);
-
-    let img = document.createElement("img");
-    img.src = "images/download.svg";
-    img.alt = "Download";
-    link.appendChild(img);
-
-    img = document.createElement("img");
-    img.src = "images/delete.svg";
-    img.alt = "Delete";
-    img.onclick = () => {
-      deleteValue(k);
-      setTimeout(() => refreshSavedGames(parent), 1);
-    };
-    div.appendChild(img);
-
-    return div;
-  });
+  const items = keys.map(addSavedGame);
   parent.replaceChildren(...items);
 }
 
@@ -124,22 +133,37 @@ function onLoad() {
   
   // window.onunload = autoSave;
   window.onunload = () => {
-    setValue("onUnload", "true");
+    setValue("w_onUnload", "true");
   };
   window.onbeforeunload = () => {
-    setValue("onBeforeUnload", "true");
+    setValue("w_onBeforeUnload", "true");
   };
   window.onclose = () => {
-    setValue("onClose", "true");
+    setValue("w_onClose", "true");
   };
   window.onpagehide = () => {
-    setValue("onPageHide", "true");
+    setValue("w_onPageHide", "true");
   };
   window.onsuspend = () => {
-    setValue("onSuspend", "true");
+    setValue("w_onSuspend", "true");
   };
   document.onvisibilitychange = () => {
-    setValue("onVisibilityChange", "true");
+    setValue("d_onVisibilityChange", "true");
+  };
+  document.onunload = () => {
+    setValue("d_onUnload", "true");
+  };
+  document.onbeforeunload = () => {
+    setValue("d_onBeforeUnload", "true");
+  };
+  document.onclose = () => {
+    setValue("d_onClose", "true");
+  };
+  document.onpagehide = () => {
+    setValue("d_onPageHide", "true");
+  };
+  document.onsuspend = () => {
+    setValue("d_onSuspend", "true");
   };
   openButton.onclick = () => {
     if (!isPaused()) {
@@ -185,7 +209,7 @@ function onLoad() {
         let name = removeExtension(file.name);
         if (name.startsWith("SRAM_")) name = `B64_${name}`;
         loadSavedGame(name, file);
-        setTimeout(() => refreshSavedGames(recentGames), 1);
+        recentGames.appendChild(addSavedGame(name));        
       }
     }
   };
