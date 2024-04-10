@@ -132,38 +132,10 @@ function onLoad() {
   const recentGames = document.getElementById("recent_games");
   
   // window.onunload = autoSave;
-  window.onunload = () => {
-    setValue("w_onUnload", "true");
-  };
-  window.onbeforeunload = () => {
-    setValue("w_onBeforeUnload", "true");
-  };
-  window.onclose = () => {
-    setValue("w_onClose", "true");
-  };
-  window.onpagehide = () => {
-    setValue("w_onPageHide", "true");
-  };
-  window.onsuspend = () => {
-    setValue("w_onSuspend", "true");
-  };
   document.onvisibilitychange = () => {
-    setValue("d_onVisibilityChange", "true");
-  };
-  document.onunload = () => {
-    setValue("d_onUnload", "true");
-  };
-  document.onbeforeunload = () => {
-    setValue("d_onBeforeUnload", "true");
-  };
-  document.onclose = () => {
-    setValue("d_onClose", "true");
-  };
-  document.onpagehide = () => {
-    setValue("d_onPageHide", "true");
-  };
-  document.onsuspend = () => {
-    setValue("d_onSuspend", "true");
+    if (document.visibilityState === "hidden") {
+      autoSave();
+    }
   };
   openButton.onclick = () => {
     if (!isPaused()) {
