@@ -122,7 +122,8 @@ function onLoad() {
   const openSaved = document.getElementById("open_saved");
   const recentGames = document.getElementById("recent_games");
   
-  window.onunload = autoSave;
+  // window.onunload = autoSave;
+  window.onbeforeunload = autoSave;
   openButton.onclick = () => {
     if (!isPaused()) {
       keyDown("pause");
