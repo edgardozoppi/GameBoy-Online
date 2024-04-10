@@ -131,7 +131,6 @@ function saveSRAM() {
 		else {
 			cout("Cannot save a game that does not have battery backed SRAM specified.", 1);
 		}
-		saveRTC();
 	}
 	else {
 		cout("GameBoy core cannot be saved while it has not been initialized.", 1);
